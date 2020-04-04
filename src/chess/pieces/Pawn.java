@@ -39,35 +39,35 @@ public class Pawn extends Piece {
 	 * @return
 	 */
 	public ArrayList<Move> getMoves(Board b, int x, int y) {
-		ArrayList<Move> moves = new ArrayList<Move>();
+		ArrayList<Move> movements = new ArrayList<Move>();
 		
 		if(color == Piece.WHITE) {
 			// forward
 			if(valid(x,y+1) && !b.getTile(x, y+1).isOccupied())
-				moves.add(new Move(x,y,x,y+1));
+				movements.add(new Move(x,y,x,y+1));
 			
 			// kill diagonally
 			if(valid(x+1,y+1) && b.getTile(x+1, y+1).isOccupied() && b.getTile(x+1, y+1).getPiece().getColor() != color)
-				moves.add(new Move(x,y,x+1,y+1));
+				movements.add(new Move(x,y,x+1,y+1));
 			
 			// kill diagonally
 			if(valid(x-1,y+1) && b.getTile(x-1, y+1).isOccupied() && b.getTile(x-1, y+1).getPiece().getColor() != color)
-				moves.add(new Move(x,y,x-1,y+1));
+				movements.add(new Move(x,y,x-1,y+1));
 		}
 		else {
 			// forward
 			if(valid(x,y-1) && !b.getTile(x, y-1).isOccupied())
-				moves.add(new Move(x,y,x,y-1));
+				movements.add(new Move(x,y,x,y-1));
 			
 			// kill diagonally
 			if(valid(x+1,y-1) && b.getTile(x+1, y-1).isOccupied() && b.getTile(x+1, y-1).getPiece().getColor() != color)
-				moves.add(new Move(x,y,x+1,y-1));
+				movements.add(new Move(x,y,x+1,y-1));
 			
 			// kill diagonally
 			if(valid(x-1,y-1) && b.getTile(x-1, y-1).isOccupied() && b.getTile(x-1, y-1).getPiece().getColor() != color)
-				moves.add(new Move(x,y,x-1,y-1));
+				movements.add(new Move(x,y,x-1,y-1));
 		}
 		
-		return moves;
+		return movements;
 	}
 }
