@@ -39,10 +39,7 @@ public class Board {
 	/**
 	 * 
 	 */
-	public Board() {
-		// initialize board
-		boolean co = Piece.WHITE;
-		tiles = new Tile[8][8];
+	private void intitWhitePlayer(Tile[][] tiles,boolean co){
 		tiles[a][1-1] = new Tile(new Rook(co));
 		tiles[b][1-1] = new Tile(new Knight(co));
 		tiles[c][1-1] = new Tile(new Bishop(co));
@@ -51,18 +48,22 @@ public class Board {
 		tiles[f][1-1] = new Tile(new Bishop(co));
 		tiles[g][1-1] = new Tile(new Knight(co));
 		tiles[h][1-1] = new Tile(new Rook(co));
-		
+
 		for(int i = 0; i < 8; i++) {
 			tiles[i][2-1] = new Tile(new Pawn(co));
 		}
-		
 		for(int i = 2; i < 7; i++) {
 			for(int j = 0; j < 8; j++) {
 				tiles[j][i] = new Tile();
 			}
 		}
-		
-		co = Piece.BLACK;
+	}
+	private void intitBlackPlayer(Tile[][] tiles,boolean co){
+		for(int i = 2; i < 7; i++) {
+			for(int j = 0; j < 8; j++) {
+				tiles[j][i] = new Tile();
+			}
+		}
 		tiles[a][8-1] = new Tile(new Rook(co));
 		tiles[b][8-1] = new Tile(new Knight(co));
 		tiles[c][8-1] = new Tile(new Bishop(co));
@@ -71,10 +72,20 @@ public class Board {
 		tiles[f][8-1] = new Tile(new Bishop(co));
 		tiles[g][8-1] = new Tile(new Knight(co));
 		tiles[h][8-1] = new Tile(new Rook(co));
-		
+
 		for(int i = 0; i < 8; i++) {
 			tiles[i][7-1] = new Tile(new Pawn(co));
 		}
+	}
+	public Board() {
+		// initialize board
+		boolean co = Piece.WHITE;
+		tiles = new Tile[8][8];
+
+		intitWhitePlayer(tiles,co);
+		
+		co = Piece.BLACK;
+		intitBlackPlayer(tiles,co);
 	}
 
 	/**
