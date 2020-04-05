@@ -128,7 +128,7 @@ public class Board {
 		
 		// check all opponent moves if they kill king (opponent moves in next round)
 		for(int j = 0; j < opponentMoves.size(); j++) {
-			if(opponentMoves.get(j).getX2() == x && opponentMoves.get(j).getY2() == y)
+			if(opponentMoves.get(j).getEndingPointX() == x && opponentMoves.get(j).getEndingPointY() == y)
 				return true;
 		}
 		
@@ -161,7 +161,7 @@ public class Board {
 		
 		// check all opponent moves if they kill king (opponent moves in next round)
 		for(int j = 0; j < opponentMoves.size(); j++) {
-			if(opponentMoves.get(j).getX2() == x && opponentMoves.get(j).getY2() == y)
+			if(opponentMoves.get(j).getEndingPointX() == x && opponentMoves.get(j).getEndingPointY() == y)
 				return true;
 		}
 		
@@ -199,14 +199,14 @@ public class Board {
 				ArrayList<Move> opponentMoves = getMovesAfter(!color, checkThis, false);
 				
 				int xUpdated = x, yUpdated = y;
-				if(checkThis.get(0).getX1() == x && checkThis.get(0).getY1() == y) { // get updated king position
-					xUpdated = checkThis.get(0).getX2();
-					yUpdated = checkThis.get(0).getY2();
+				if(checkThis.get(0).getStartingPointX() == x && checkThis.get(0).getStartingPointY() == y) { // get updated king position
+					xUpdated = checkThis.get(0).getEndingPointX();
+					yUpdated = checkThis.get(0).getEndingPointY();
 				}
 				
 				// check all opponent moves if they kill king (opponent moves in next round)
 				for(int j = 0; j < opponentMoves.size(); j++) {
-					if(opponentMoves.get(j).getX2() == xUpdated && opponentMoves.get(j).getY2() == yUpdated)
+					if(opponentMoves.get(j).getEndingPointX() == xUpdated && opponentMoves.get(j).getEndingPointY() == yUpdated)
 						removeThese.add(checkThis.get(0));
 				}
 			}
@@ -271,36 +271,36 @@ public class Board {
 	 * 			0 if game continues
 	 */
 	public int makeMove(Move m) {
-		Tile oldTile = tiles[m.getX1()][m.getY1()];
+		Tile oldTile = tiles[m.getStartingPointX()][m.getStartingPointY()];
 				
-		tiles[m.getX2()][m.getY2()] = tiles[m.getX1()][m.getY1()];
-		tiles[m.getX1()][m.getY1()] = new Tile();
+		tiles[m.getEndingPointX()][m.getEndingPointY()] = tiles[m.getStartingPointX()][m.getStartingPointY()];
+		tiles[m.getStartingPointX()][m.getStartingPointY()] = new Tile();
 		
 		if(m.isCastling()) {
-			if(m.getX2() == g && m.getY2() == 1-1) {
+			if(m.getEndingPointX() == g && m.getEndingPointY() == 1-1) {
 				tiles[f][1-1] = tiles[h][1-1];
 				tiles[h][1-1] = new Tile();
 			}
-			if(m.getX2() == c && m.getY2() == 1-1) {
+			if(m.getEndingPointX() == c && m.getEndingPointY() == 1-1) {
 				tiles[d][1-1] = tiles[a][1-1];
 				tiles[a][1-1] = new Tile();			
 			}
-			if(m.getX2() == g && m.getY2() == 8-1) {
+			if(m.getEndingPointX() == g && m.getEndingPointY() == 8-1) {
 				tiles[f][8-1] = tiles[h][8-1];
 				tiles[h][8-1] = new Tile();
 			}
-			if(m.getX2() == c && m.getY2() == 8-1) {
+			if(m.getEndingPointX() == c && m.getEndingPointY() == 8-1) {
 				tiles[d][8-1] = tiles[a][8-1];
 				tiles[a][8-1] = new Tile();	
 			}
 		}
 		
 		// pawn at top?
-		if(oldTile.getPiece().toString().equals("P") && m.getY2() == 8-1)
-			tiles[m.getX2()][m.getY2()] = new Tile(new Queen(Piece.WHITE));
+		if(oldTile.getPiece().toString().equals("P") && m.getEndingPointY() == 8-1)
+			tiles[m.getEndingPointX()][m.getEndingPointY()] = new Tile(new Queen(Piece.WHITE));
 		
-		if(oldTile.getPiece().toString().equals("p") && m.getY2() == 1-1)
-			tiles[m.getX2()][m.getY2()] = new Tile(new Queen(Piece.BLACK));
+		if(oldTile.getPiece().toString().equals("p") && m.getEndingPointY() == 1-1)
+			tiles[m.getEndingPointX()][m.getEndingPointY()] = new Tile(new Queen(Piece.BLACK));
 		
 		return 0;
 	}
